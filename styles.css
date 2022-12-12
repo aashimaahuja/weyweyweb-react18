@@ -1,0 +1,29 @@
+h1,
+p {
+  font-family: Lato;
+}
+.itemlist > li {
+  list-style: none;
+  border: 1px solid;
+  border-radius: 5px;
+  margin-bottom: 16px;
+  padding: 16px;
+  margin: 16px;
+  background-color: blueviolet;
+  color: white;
+  font-family: sans-serif;
+  text-align: center;
+  max-width: 500px;
+}
+
+.searchbox {
+  margin: 16px;
+  height: 50px;
+  width: 500px;
+  border-radius: 2px solid;
+  font-size: 28px;
+}
+
+.itemlist ul {
+  padding: 0;
+}

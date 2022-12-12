@@ -1,0 +1,498 @@
+import {
+  CodeSurfer,
+  CodeSurferColumns,
+  Step,
+} from "code-surfer";
+import { github, vsDark, nightOwl } from "@code-surfer/themes";
+import image from './react-2.svg';
+import ReactLogo from './ReactLogo'
+import {RSCDiagram} from './components/RSCDiagram'
+import {Slide2} from './components/Slide2/Slide2'
+import {Slide3} from './components/Slide3/Slide3'
+import "prismjs/components/prism-smalltalk"
+import i from './images/image1.jpg';
+import img2 from './images/img2.jpg';
+import ssr from './images/ssr.jpg';
+
+
+export const theme = nightOwl;
+
+
+# React Server Components
+<ReactLogo />
+
+---
+
+<CodeSurfer theme={nightOwl} title='Rendering'>
+
+```smalltalk title='Rendering'
+Client Side Rendering (CSR)
+Server Side Rendering (SSR)
+```
+</CodeSurfer>
+
+---
+
+<img src={i} />
+
+---
+
+<img src={img2} />
+
+---
+
+<CodeSurfer theme={nightOwl} title='`Problems`'>
+
+```smalltalk title='Problems'
+1. Large Bundle size as application scales
+```
+```smalltalk title='Problems'
+1. Large Bundle size as application scales
+2. Delay in getting data from server
+```
+</CodeSurfer>
+
+---
+
+<img src={ssr} />
+
+---
+
+<CodeSurfer theme={nightOwl} title='`Problems`'>
+
+```smalltalk
+This is performant but kills user interactivity
+```
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={nightOwl} >
+
+```smalltalk
+High User interactivity
+```
+```smalltalk
+High User interactivity
+Fast Performace
+```
+</CodeSurfer>
+
+---
+### React Server Components
+
+<RSCDiagram />
+
+---
+
+<Slide2 />
+
+---
+
+<Slide3 />
+
+---
+
+<CodeSurferColumns>
+
+<Step>
+  
+<Slide2 />
+
+```smalltalk
+  The code is not added into bundle
+  ```
+
+</Step>
+
+<Step>
+  
+<Slide2 />
+
+```smalltalk
+  The code is not added into bundle
+  Db or filesystem can be accessed directly
+  ```
+
+</Step>
+
+
+</CodeSurferColumns>
+
+---
+
+<CodeSurfer>
+
+```js file='./components/App.js'
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer>
+
+```js
+export default function EmailList() {
+
+}
+```
+
+```js
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+}
+```
+
+```js
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+
+  return (
+    <div>
+      emails.map(email => {
+
+      })
+    </div>
+  )
+  
+}
+```
+
+```js
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email,subject, description, date } = email
+        return (
+            <li>
+                <div>{name}{email}</div>
+                <div>{subject}</div>
+                <div>{description}</div>
+                <div>{date}</div>
+            </li>
+          )
+      })}
+    </div>
+  )
+}
+```
+
+```js
+import { format } from 'date-fns'
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email,subject, description, date } = email
+        return (
+            <li>
+                <div>{name}{email}</div>
+                <div>{subject}</div>
+                <div>{description}</div>
+                <div>{format(date)}</div>
+            </li>
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js 1:25
+
+//EmailList.js
+
+import { format } from 'date-fns'
+
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email,subject, description, date } = email
+        return (
+            <li>
+                <div>{name}{email}</div>
+                <div>{subject}</div>
+                <div>{description}</div>
+                <div>{format(date)}</div>
+            </li>
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js 1:25
+
+import { format } from 'date-fns'
+
+export default function EmailList() {
+  const emails = db.query(`${query}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email,subject, description, date } = email
+        return (
+            <li>
+                <div>{name}{email}</div>
+                <div>{subject}</div>
+                <div>{description}</div>
+                <div>{format(date)}</div>
+            </li>
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js
+
+import { format } from 'date-fns'
+
+export default function EmailList() {
+  const emails = db.query(`${query}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email,subject, description, date } = email
+        return (
+            <li onClick={handleClick}>
+                <div>{name}{email}</div>
+                <div>{subject}</div>
+                <div>{description}</div>
+                <div>{format(date)}</div>
+            </li>
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js
+// EmailList.server.js
+
+import { format } from 'date-fns'
+import EmailCard from './EmailCard.client.js'
+
+export default function EmailList() {
+  const emails = db.query(`${query}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email,subject, description, date } = email
+        return (
+            <EmailCard
+              name={name}
+              subject={subject}
+              description={description}
+              date={format(date)}
+            />
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurferColumns themes={[nightOwl, vsDark]}>
+
+<Step>
+
+```js
+// EmailList.server.js
+
+import { format } from 'date-fns'
+import EmailCard from './EmailCard.client.js'
+
+export default function EmailList() {
+  const emails = db.query(`${query}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email,subject, description, date } = email
+        return (
+            <EmailCard
+              name={name}
+              subject={subject}
+              description={description}
+              date={format(date)}
+            />
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js file='./components/EmailCard.js'
+
+```
+
+</Step>
+
+</CodeSurferColumns>
+
+---
+
+<CodeSurfer>
+
+```js title="This is a title" subtitle="and this a subtitle"
+function lorem(ipsum, dolor = 1) {
+  const sit = ipsum == null ? 0 : ipsum.sit;
+  dolor = sit - amet(dolor);
+  return sit
+    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
+    : [];
+}
+
+function incididunt(ipsum, ut = 1) {
+  ut = labore.et(amet(ut), 0);
+  const sit = ipsum == null ? 0 : ipsum.sit;
+
+  if (!sit || ut < 1) {
+    return [];
+  }
+
+  let dolore = 0;
+  let magna = 0;
+  const aliqua = new eiusmod(labore.ut(sit / ut));
+
+  while (dolore < sit) {
+    aliqua[magna++] = consectetur(
+      ipsum,
+      dolore,
+      (dolore += ut)
+    );
+  }
+
+  return aliqua;
+}
+```
+
+```js
+function lorem(ipsum, dolor = 1) {
+  const sit = ipsum == null ? 0 : ipsum.sit;
+  dolor = sit - amet(dolor);
+  return sit
+    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
+    : [];
+}
+
+function adipiscing(...elit) {
+  if (!elit.sit) {
+    return [];
+  }
+
+  const sed = elit[0];
+  return eiusmod.tempor(sed) ? sed : [sed];
+}
+
+function incididunt(ipsum, ut = 1) {
+  ut = labore.et(amet(ut), 0);
+  const sit = ipsum == null ? 0 : ipsum.sit;
+
+  if (!sit || ut < 1) {
+    return [];
+  }
+
+  let dolore = 0;
+  let magna = 0;
+  const aliqua = new eiusmod(labore.ut(sit / ut));
+
+  while (dolore < sit) {
+    aliqua[magna++] = consectetur(
+      ipsum,
+      dolore,
+      (dolore += ut)
+    );
+  }
+
+  return aliqua;
+}
+```
+
+```diff 1[10:14],2[15:19],3[22:27],10:12
+
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurferColumns themes={[vsDark, github]}>
+
+<Step>
+
+```js
+const magna = aliqua => aliqua.ut((enim, ad) => enim, 0);
+```
+
+```js
+const minim = (ad, enim) => dolore.magna(ad / enim);
+```
+
+</Step>
+
+<Step>
+
+```js
+const lorem = (ipsum, dolor, sit) => {
+  const amet = dolor - ipsum;
+  return consectetur.adipiscing(
+    {
+      elit: sed.eiusmod(sit - dolor) / amet + 2,
+    },
+    (tempor, incididunt) => ipsum + amet * incididunt
+  );
+};
+
+const magna = aliqua => aliqua.ut((enim, ad) => enim, 0);
+```
+
+```js
+const minim = (ad, enim) => dolore.magna(ad / enim);
+
+const sed = (eiusmod, tempor, incididunt) => {
+  const ut = tempor - eiusmod;
+  return labore.et(
+    {
+      amet: dolore.magna(incididunt - tempor) / ut + 2,
+    },
+    (aliqua, elit) => eiusmod + ut * elit
+  );
+};
+```
+
+</Step>
+
+</CodeSurferColumns>
+
+---
+
+docs:  
+[codesurfer.pomb.us](https://codesurfer.pomb.us)

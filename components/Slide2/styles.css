@@ -1,0 +1,32 @@
+.icon-container{
+    display: flex;
+    gap: 200px;
+}
+
+.client-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #F27862;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.server-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #2D9BF0;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+
+  .logo {
+    display: flex;
+    flex-direction:column;
+    height: fit-content;
+    gap: 30px; 
+    margin-left:20px;
+  }

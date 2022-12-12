@@ -1,0 +1,14 @@
+
+.animatedlogo {
+    display: flex;
+    flex-direction:column;
+    height: fit-content;
+    gap: 30px; 
+    margin-left:20px;
+    animation: animateLogo 3s;
+    animation-fill-mode: both;
+  }
+  
+  @keyframes animateLogo {
+    100% {transform: translate(150px,0)}
+   }

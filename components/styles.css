@@ -1,0 +1,38 @@
+body{
+  background-color: red;
+}
+.container{
+    display: flex;
+    gap: 300px;
+  }
+  .client {
+    background: #F27862;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    animation: example 3s;
+    position: relative;
+    /* animation-delay: 3s; */
+    animation-fill-mode: both;
+    
+  }
+  
+  @keyframes example {
+   100% {transform: translate(180px,0)}
+  }
+  
+  @keyframes example2 {
+    100% {transform: translate(-180px,0)}
+  } 
+  
+  .server {
+    background: #2D9BF0;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    animation: example2 3s;
+    position: relative;
+    /* animation-delay: 3s; */
+    animation-fill-mode: both;
+  }
+  

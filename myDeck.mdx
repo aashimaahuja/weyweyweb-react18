@@ -1,0 +1,690 @@
+import {
+  CodeSurfer,
+  CodeSurferColumns,
+  Step,
+} from "code-surfer";
+import { github, vsDark, nightOwl } from "@code-surfer/themes";
+import image from './react-2.svg';
+import ReactLogo from './ReactLogo'
+import reactBrain from './images/reactBrain.png';
+import islide0 from './RSCIntroSlides/slide0.png';
+import islide1 from './RSCIntroSlides/slide1.png';
+import islide2 from './RSCIntroSlides/slide2.png';
+import islide3 from './RSCIntroSlides/slide3.png';
+import islide4 from './RSCIntroSlides/slide4.png';
+import islide5 from './RSCIntroSlides/slide5.png';
+import islide6 from './RSCIntroSlides/slide6.png';
+import islide7 from './RSCIntroSlides/slide7.png';
+import islide8 from './RSCIntroSlides/slide8.png';
+import islide9 from './RSCIntroSlides/slide9.png';
+import islide10 from './RSCIntroSlides/slide10.png';
+import slide1 from './RSCSlides/slide1.png';
+import slide2 from './RSCSlides/slide2.png';
+import slide3 from './RSCSlides/slide3.png';
+import slide4 from './RSCSlides/slide4.png';
+import slide5 from './RSCSlides/slide5.png';
+import slide6 from './RSCSlides/slide6.png';
+import slide7 from './RSCSlides/slide7.png';
+import slide8 from './RSCSlides/slide8.png';
+import slide9 from './RSCSlides/slide9.png';
+import slide10 from './RSCSlides/slide10.png';
+import slide11 from './RSCSlides/slide11.png';
+import slide12 from './RSCSlides/slide12.png';
+import slide13 from './RSCSlides/slide13.png';
+import slide14 from './RSCSlides/slide14.png';
+import slide15 from './RSCSlides/slide15.png';
+import slide16 from './RSCSlides/slide16.png';
+import slide17 from './RSCSlides/slide17.png';
+import slide18 from './RSCSlides/slide18.png';
+import slide19 from './RSCSlides/slide19.png';
+import slide20 from './RSCSlides/slide20.png';
+import thanks from './RSCSlides/thankyou.png';
+import tslide0 from './introSlides/slide0.png';
+import tslide1 from './introSlides/slide1.png';
+import tslide2 from './introSlides/slide2.png';
+import tslide3 from './introSlides/slide3.png';
+import tslide4 from './introSlides/slide4.png';
+import tslide7 from './introSlides/slide7.png';
+import tslide8 from './introSlides/slide8.png';
+import tslide5 from './introSlides/slide5.png';
+import tslide6 from './introSlides/slide6.png';
+import what from './whatt.gif';
+
+import "prismjs/components/prism-smalltalk"
+
+
+export const theme = nightOwl;
+
+## React Server Components
+<ReactLogo />
+
+---
+
+### What is Frontend dev's favourite bread?
+
+---
+
+## NaN (नान)
+
+---
+
+<img src={tslide0} width='80%'/>
+
+---
+
+<img src={tslide1} width='80%'/>
+
+---
+
+<img src={tslide2} width='80%'/>
+
+---
+
+<img src={tslide3}  width='80%'/>
+
+---
+
+<img src={tslide4} width='80%'/>
+
+---
+
+<img src={tslide7} width='80%'/>
+
+---
+
+<img src={tslide8} width='80%'/>
+
+---
+
+<img src={tslide5}  width='80%' />
+
+---
+
+<img src={tslide6}  width='80%'/>
+
+---
+<img src={islide0} />
+
+---
+
+<img src={islide1} width='80%'/>
+
+---
+
+<img src={islide2} width='80%'/>
+
+---
+
+<img src={islide3}  width='80%' />
+
+---
+
+<img src={islide4} width='80%'/>
+
+---
+
+<img src={islide5}  width='80%'/>
+
+---
+
+<img src={islide6}  width='80%'/>
+
+---
+
+<img src={islide7}  width='80%'/>
+
+---
+
+<img src={islide8}  width='80%'/>
+
+---
+
+<img src={what} height="70%" width="70%"/>
+
+---
+
+<img src={islide9} />
+
+---
+
+### Shopify Hydrogen
+
+---
+
+<img src={islide10} />
+
+---
+
+### Configurations needed
+
+---
+
+<CodeSurfer>
+
+```js
+
+npm install next@canary react@rc react-dom@rc
+
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer>
+
+```js
+
+// next.config.js
+module.exports = {
+  experimental: {
+    runtime: 'edge',
+    serverComponents: true,
+  },
+}
+
+```
+</CodeSurfer>
+
+---
+
+### Create React Server Component
+
+---
+
+<img src={slide18}  width='90%'/>
+
+
+---
+
+<CodeSurfer>
+
+```js file='./components/App.js'
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer>
+
+```js
+export default function EmailList() {
+
+}
+```
+
+```js
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+}
+```
+
+```js
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+
+  return (
+    <div>
+      {emails.map(email => {
+
+      })}
+    </div>
+  )
+  
+}
+```
+
+```js
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <div>
+                <div>{name}{email}</div>
+                <div>{subject}</div>
+                <div>{description}</div>
+                <div>{date}</div>
+            </div>
+          )
+      })}
+    </div>
+  )
+}
+```
+
+```js
+import { format } from 'date-fns'
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <div>
+                <div>{name}{email}</div>
+                <div>{subject}</div>
+                <div>{description}</div>
+                <div>{format(date)}</div>
+            </div>
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js 1:25
+
+//EmailList.js
+
+import { format } from 'date-fns'
+
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <div>
+                <div>{name}{email}</div>
+                <div>{subject}</div>
+                <div>{description}</div>
+                <div>{format(date)}</div>
+            </div>
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+</CodeSurfer>
+
+
+
+---
+
+<CodeSurferColumns themes={[nightOwl, vsDark]}>
+
+<Step>
+
+```js 1:12,22:24
+
+//EmailListContainer.js
+
+import { format } from 'date-fns'
+
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <div>
+                <div>{name}{email}</div>
+                <div>{subject}</div>
+                <div>{description}</div>
+                <div>{format(date)}</div>
+            </div>
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js
+
+// EmailListView.js
+
+export default function EmailListView(props){
+
+  const {name, email, subject, description, date} = props
+
+  return (
+    <div>
+        <div>{name}{email}</div>
+        <div>{subject}</div>
+        <div>{description}</div>
+        <div>{date}</div>
+    </div>
+  )
+}
+
+```
+</Step>
+
+<Step>
+
+```js 1:12,22:24
+
+//EmailListContainer.server.js
+
+import { format } from 'date-fns'
+
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <div>
+                <div>{name}{email}</div>
+                <div>{subject}</div>
+                <div>{description}</div>
+                <div>{format(date)}</div>
+            </div>
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js 1:16
+
+// EmailListView.client.js
+
+export default function EmailListView(props){
+
+  const {name, email, subject, description, date} = props
+
+  return (
+    <div>
+        <div>{name}{email}</div>
+        <div>{subject}</div>
+        <div>{description}</div>
+        <div>{date}</div>
+    </div>
+  )
+}
+
+```
+</Step>
+
+<Step>
+
+```js
+
+//EmailListContainer.server.js
+
+import { format } from 'date-fns'
+import EmailListView from './EmailListView.client.js'
+
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <EmailListView
+              name={name}
+              subject={subject}
+              description={description}
+              date={format(date)}
+            />
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js
+
+// EmailListView.client.js
+
+export default function EmailListView(props){
+
+  const {name, email, subject, description, date} = props
+
+  return (
+    <div>
+        <div>{name}{email}</div>
+        <div>{subject}</div>
+        <div>{description}</div>
+        <div>{date}</div>
+    </div>
+  )
+}
+
+```
+
+</Step>
+
+</CodeSurferColumns>
+
+---
+
+<CodeSurfer>
+
+```js
+
+// EmailListContainer.server.js
+
+import { format } from 'date-fns'
+import EmailListView from './EmailListView.client.js'
+
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <EmailListView
+              name={name}
+              subject={subject}
+              description={description}
+              date={format(date)}
+            />
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js
+
+// EmailListContainer.server.js
+
+import { format } from 'date-fns'
+import EmailListView from './EmailListView.client.js'
+
+export default function EmailList() {
+  const emails = db.query(`${query}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <EmailListView
+              name={name}
+              subject={subject}
+              description={description}
+              date={format(date)}
+            />
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js
+
+// EmailListContainer.server.js
+
+import { format } from 'date-fns'
+import EmailListView from './EmailListView.client.js'
+
+export default function EmailList() {
+  const emails = fs.readFile('emailData.js')
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <EmailListView
+              name={name}
+              subject={subject}
+              description={description}
+              date={format(date)}
+            />
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+</CodeSurfer>
+
+
+
+
+
+---
+
+<img src={slide20}/>
+
+---
+
+<img src={slide19} width='40%'/>
+
+
+---
+
+### Challenges 
+
+---
+
+<img src={slide1}/>
+
+---
+
+<CodeSurfer>
+
+```js
+
+export default function MyClientComponent() {
+    return (
+        <div>
+            This code is rendered on the client
+        </div>
+    );
+}
+
+```
+
+```js
+
+import MyServerComponent from './MyServerComponent.server.js'
+export default function MyClientComponent() {
+    return (
+        <div>
+            This code is rendered on the client
+            <MyServerComponent />
+        </div>
+    );
+}
+
+```
+
+```js
+
+export default function MyClientComponent({children}) {
+    return (
+        <div>
+            This code is rendered on the client
+            {children}
+        </div>
+    );
+}
+
+```
+
+
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer>
+
+```js
+
+export default function MyContainerServerComponent() {
+    return (
+        <MyClientComponent >
+            <MyServerComponent />
+        </MyClientComponent>
+    );
+}
+
+```
+
+</CodeSurfer>
+
+---
+
+<img src={slide2} />
+
+---
+
+<img src={slide3}  width='80%'/>
+
+
+---
+
+<img src={slide13} width='70%' height='70%'/>
+
+---
+
+<img src={slide14}/>
+
+---
+
+<img src={slide15}/>
+
+---
+
+<img src={slide16} />
+
+---
+
+<img src={slide17} />
+
+---
+
+<img src={thanks} width='80%' />
+
+
+

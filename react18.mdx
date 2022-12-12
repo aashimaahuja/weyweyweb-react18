@@ -1,0 +1,2075 @@
+import {
+  CodeSurfer,
+  CodeSurferColumns,
+  Step,
+} from "code-surfer";
+import { github, vsDark, nightOwl } from "@code-surfer/themes";
+import "prismjs/components/prism-smalltalk"
+import Demo1 from './Demo1'
+import Demo2 from './Demo2'
+import Demo3 from './Demo3'
+import Demo4 from './Demo4'
+import UseDeferredValueDemo1 from './UseDeferredValueDemo1'
+
+
+import image from './react-2.svg';
+import ReactLogo from './ReactLogo'
+import reactBrain from './images/reactBrain.png';
+import islide0 from './RSCIntroSlides/slide0.png';
+import islide1 from './RSCIntroSlides/slide1.png';
+import islide2 from './RSCIntroSlides/slide2.png';
+import islide3 from './RSCIntroSlides/slide3.png';
+import islide4 from './RSCIntroSlides/slide4.png';
+import islide5 from './RSCIntroSlides/slide5.png';
+import islide6 from './RSCIntroSlides/slide6.png';
+import islide7 from './RSCIntroSlides/slide7.png';
+import islide8 from './RSCIntroSlides/slide8.png';
+import islide9 from './RSCIntroSlides/slide9.png';
+import islide10 from './RSCIntroSlides/slide10.png';
+import slide1 from './RSCSlides/slide1.png';
+import slide2 from './RSCSlides/slide2.png';
+import slide3 from './RSCSlides/slide3.png';
+import slide4 from './RSCSlides/slide4.png';
+import slide5 from './RSCSlides/slide5.png';
+import slide6 from './RSCSlides/slide6.png';
+import slide7 from './RSCSlides/slide7.png';
+import slide8 from './RSCSlides/slide8.png';
+import slide9 from './RSCSlides/slide9.png';
+import slide10 from './RSCSlides/slide10.png';
+import slide11 from './RSCSlides/slide11.png';
+import slide12 from './RSCSlides/slide12.png';
+import slide13 from './RSCSlides/slide13.png';
+import slide14 from './RSCSlides/slide14.png';
+import slide15 from './RSCSlides/slide15.png';
+import slide16 from './RSCSlides/slide16.png';
+import slide17 from './RSCSlides/slide17.png';
+import slide18 from './RSCSlides/slide18.png';
+import slide19 from './RSCSlides/slide19.png';
+import slide20 from './RSCSlides/slide20.png';
+import thanks from './RSCSlides/thankyou.png';
+import tslide0 from './introSlides/slide0.png';
+import tslide1 from './introSlides/slide1.png';
+import tslide2 from './introSlides/slide2.png';
+import tslide3 from './introSlides/slide3.png';
+import tslide4 from './introSlides/slide4.png';
+import tslide7 from './introSlides/slide7.png';
+import tslide8 from './introSlides/slide8.png';
+import tslide5 from './introSlides/slide5.png';
+import tslide6 from './introSlides/slide6.png';
+import what from './whatt.gif';
+import whenUse from './images/whenUse.png';
+
+import suspense1 from './suspenseImages/suspense1.png';
+import suspense2 from './suspenseImages/suspense2.png';
+import suspense3 from './suspenseImages/suspense3.png';
+import suspense4 from './suspenseImages/suspense4.png';
+
+export const theme = nightOwl;
+
+## What's new in React 18 ??
+
+---
+
+### React 18
+
++ Automatic Batching
++ Concurrency
++ New hooks introduced
+  + useId
+  + useTransition
+  + useDeferredValue
++ Suspense
++ Server Components
+
+---
+
+<img src={tslide0} width='80%'/>
+
+---
+
+## Automatic Batching
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```smalltalk title='Automatic Batching'
+We know that whenever there is a state update , react does a re render. 
+Batching is when React groups multiple state updates in a single render for 
+performance benefits.
+```
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```js
+
+const [count, setCount] = useState(0);
+const [isActive, setIsActive] = useState(false);
+
+
+
+```
+```js
+
+const [count, setCount] = useState(0);
+const [isActive, setIsActive] = useState(false);
+
+function incrementCount(){
+  
+}
+
+<button onClick={incrementCount}>Count</button>
+
+```
+```js
+
+const [count, setCount] = useState(0);
+const [isActive, setIsActive] = useState(false);
+
+function incrementCount(){
+  setCount(count+1);
+  setIsActive(!isActive);
+}
+
+<button onClick={incrementCount}>Count</button>
+
+```
+
+```js
+
+const [count, setCount] = useState(0);
+const [isActive, setIsActive] = useState(false);
+
+function incrementCount(){
+  setTimeout(() => {
+    setCount(count+1);
+    setIsActive(!isActive);
+  })
+}
+
+<button onClick={incrementCount}>Count</button>
+
+```
+
+```js
+
+const [count, setCount] = useState(0);
+const [isActive, setIsActive] = useState(false);
+
+function incrementCount(){
+  fetch(('/someurl').then(() => {
+    setCount(count+1);
+    setIsActive(!isActive);
+  })
+}
+
+<button onClick={incrementCount}>Count</button>
+
+```
+
+```js
+
+const [count, setCount] = useState(0);
+const [isActive, setIsActive] = useState(false);
+
+function incrementCount(){
+  fetch(('/someurl').then(() => {
+    // 2 rerenders before React 18
+    // 1 rerender in React 18
+    setCount(count+1);
+    setIsActive(!isActive);
+  })
+}
+
+<button onClick={incrementCount}>Count</button>
+
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```smalltalk
+
+In React 18 , all state updates are batched out of the box irrespective of 
+how they are called.
+
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```js
+function incrementCount(){
+  flushSync(() => {
+    setCount(count+1);
+  })
+  setIsActive(!isActive);
+}
+```
+
+</CodeSurfer>
+
+---
+
+## useId()
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```smalltalk
+
+useId hook allows you to create unique ids which are consistent
+across server and client
+
+```
+
+```smalltalk
+
+useId hook allows you to create unique ids which are consistent
+across server and client
+
+We need unique ids for accessibility.
+
+```
+
+</CodeSurfer>
+
+---
+
+
+<CodeSurfer theme={nightOwl} >
+
+```js
+
+function Form(){
+
+
+}
+
+```
+
+```js
+
+function Form(){
+   return (
+    <>
+      <label>
+        Password:
+        <input
+          type="password"
+          aria-describedby="password-hint"
+        />
+      </label>
+      <p id="password-hint">
+        The password should contain at least 8 characters
+      </p>
+    </>
+  );
+
+}
+
+```
+
+```js 9,12 title='using hardcoded ids'
+
+function Form(){
+   return (
+    <>
+      <label>
+        Password:
+        <input
+          type="password"
+          aria-describedby="password-hint"
+        />
+      </label>
+      <p id="password-hint">
+        The password should contain at least 8 characters
+      </p>
+    </>
+  );
+
+}
+
+```
+
+```js title='using Math.random()'
+
+function Form(){
+   const randomId = Math.floor(Math.random() * 100);
+
+   return (
+    <>
+      <label>
+        Password:
+        <input
+          type="password"
+          aria-describedby={randomId}
+        />
+      </label>
+      <p id={randomId}>
+        The password should contain at least 8 characters
+      </p>
+    </>
+  );
+
+}
+
+```
+
+```js title='using useId hook'
+
+import {useId} from 'react'
+
+function Form(){
+   const passwordHintId = useId();
+
+   return (
+    <>
+      <label>
+        Password:
+        <input
+          type="password"
+          aria-describedby={passwordHintId}
+        />
+      </label>
+      <p id={passwordHintId}>
+        The password should contain at least 8 characters
+      </p>
+    </>
+  );
+
+}
+
+```
+
+```js title='using useId hook'
+
+import {useId} from 'react'
+
+function Form(){
+   const passwordHintId = useId();
+
+   return (
+    <>
+      <label>First Name:</label>
+      <input type="text" />
+
+      <label>Last Name:</label>
+      <input type="text" />
+      <label>
+        Password:
+        <input
+          type="password"
+          aria-describedby={passwordHintId}
+        />
+      </label>
+      <p id={passwordHintId}>
+        The password should contain at least 8 characters
+      </p>
+    </>
+  );
+
+}
+
+```
+
+```js title='using useId hook'
+
+import {useId} from 'react'
+
+function Form(){
+   const id = useId();
+
+   return (
+    <>
+      <label htmlFor={id + '-firstName'}>First Name:</label>
+      <input id={id + '-firstName'} type="text" />
+      
+      <label>Last Name:</label>
+      <input id={id + '-lastName'} type="text" />
+      <label>
+        Password:
+        <input
+          type="password"
+          aria-describedby={id + '-passwordHint'}
+        />
+      </label>
+      <p id={id + '-passwordHint'}>
+        The password should contain at least 8 characters
+      </p>
+    </>
+  );
+
+}
+
+```
+
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={nightOwl} >
+
+```smalltalk title='How these ids look like'
+
+- r0
+- r1
+- r3
+
+```
+
+</CodeSurfer>
+
+---
+
+## Concurrent React
+
+---
+
+<CodeSurfer theme={nightOwl} title='`Concurrency`'>
+
+```html
+
+<body>
+  <script src="A.js"></script>
+  <script src="B.js"></script>
+  <script src="C.js"></script>
+</body>
+
+```
+
+```html
+
+<body>
+  <script src="A.js" defer></script>
+  <script src="B.js"></script>
+  <script src="C.js"></script>
+</body>
+
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```js
+setA('A')
+setB('B')
+setC('C')
+```
+```js 1
+setA('A')
+setB('B')
+setC('C')
+```
+```js 2
+setA('A')
+setB('B')
+setC('C')
+```
+```js 3
+setA('A')
+setB('B')
+setC('C')
+```
+
+</CodeSurfer>
+
+---
+
+### React can pause, interrupt or abandon a render
+
+---
+
+<Demo1 />
+
+---
+
+<CodeSurferColumns themes={[nightOwl, nightOwl]}>
+
+<Step>
+
+```js
+
+const [filter, setFilter] = useState('')
+
+const [filteredItems, setFilteredItems] = 
+useState(dummyItems);
+
+
+
+```
+
+<Demo1 />
+
+</Step>
+
+<Step>
+
+```js
+
+const [filter, setFilter] = useState('')
+
+const [filteredItems, setFilteredItems] = 
+useState(dummyItems);
+
+return (
+  <div>
+    <input onChange={filterItems} />
+    <ul>
+      {filteredItems.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ul>
+  </div>
+);
+
+
+```
+
+<Demo1 />
+
+</Step>
+
+<Step>
+
+```js
+
+const [filter, setFilter] = useState('')
+
+const [filteredItems, setFilteredItems] = 
+useState(dummyItems);
+
+const filterItems = (e) => {
+  const value = e.target.value;
+  const filteredItems = dummyItems.filter(
+    (item) => item.includes(value)
+  );
+
+  setFilter(value);
+  setFilteredItems([...filteredItems]);
+};
+
+return (
+  <div>
+    <input onChange={filterItems} />
+    <ul>
+      {filteredItems.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ul>
+  </div>
+);
+
+```
+
+<Demo1 />
+
+</Step>
+
+
+</CodeSurferColumns>
+
+---
+
+### useTransition
+
+### useDeferredValue
+
+---
+
+<CodeSurferColumns themes={[nightOwl, nightOwl]}>
+
+<Step>
+
+```js
+
+const [filter, setFilter] = useState('')
+
+const [filteredItems, setFilteredItems] = 
+useState(dummyItems);
+
+const filterItems = (e) => {
+  const value = e.target.value;
+  const filteredItems = dummyItems.filter(
+    (item) => item.includes(value)
+  );
+
+  setFilter(value);
+  setFilteredItems([...filteredItems]);
+};
+
+
+```
+
+<Demo2 />
+
+</Step>
+
+<Step>
+
+```js
+
+const [filter, setFilter] = useState('')
+
+const [filteredItems, setFilteredItems] = 
+useState(dummyItems);
+
+const [isPending, startTransition] = useTransition();
+
+const filterItems = (e) => {
+  const value = e.target.value;
+  const filteredItems = dummyItems.filter(
+    (item) => item.includes(value)
+  );
+
+  setFilter(value);
+  setFilteredItems([...filteredItems]);
+};
+
+
+```
+
+<Demo2 />
+
+</Step>
+
+<Step>
+
+```js
+
+const [filter, setFilter] = useState('')
+
+const [filteredItems, setFilteredItems] = 
+useState(dummyItems);
+
+const [isPending, startTransition] = useTransition();
+
+const filterItems = (e) => {
+  const value = e.target.value;
+  const filteredItems = dummyItems.filter(
+    (item) => item.includes(value)
+  );
+  setFilter(value);
+  startTransition(() => {
+    setFilteredItems([...filteredItems]);
+  })
+  
+};
+
+
+```
+
+<Demo2 />
+
+</Step>
+
+
+<Step>
+
+```js
+
+const [filter, setFilter] = useState('')
+
+const [filteredItems, setFilteredItems] = 
+useState(dummyItems);
+
+const [isPending, startTransition] = useTransition();
+
+const filterItems = (e) => {
+  const value = e.target.value;
+  const filteredItems = dummyItems.filter(
+    (item) => item.includes(value)
+  );
+  setFilter(value);
+  startTransition(() => {
+    setFilteredItems([...filteredItems]);
+  })
+  
+};
+
+return (
+  <div>
+    <input onChange={filterItems} />
+    {isPending ? (
+        <div>Loading...</div>
+      ) : (
+        <ul>
+          {filteredItems.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+);
+
+```
+
+<Demo2 />
+
+</Step>
+
+<Step>
+
+```js
+
+const [filter, setFilter] = useState('')
+
+const [filteredItems, setFilteredItems] = 
+useState(dummyItems);
+
+const [isPending, startTransition] = useTransition();
+
+const filterItems = (e) => {
+  const value = e.target.value;
+  const filteredItems = dummyItems.filter(
+    (item) => item.includes(value)
+  );
+  setFilter(value);
+  startTransition(() => {
+    setFilteredItems([...filteredItems]);
+  })
+  
+};
+
+return (
+  <div>
+    <input onChange={filterItems} />
+    {isPending ? (
+        <div>Loading...</div>
+      ) : (
+        <ul>
+          {filteredItems.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+);
+
+```
+
+<Demo3 />
+
+</Step>
+
+<Step>
+
+```js
+
+const [filter, setFilter] = useState('')
+
+const [filteredItems, setFilteredItems] = 
+useState(dummyItems);
+
+const [isPending, startTransition] = useTransition();
+
+const filterItems = (e) => {
+  const value = e.target.value;
+  const filteredItems = dummyItems.filter(
+    (item) => item.includes(value)
+  );
+  setFilter(value);
+  startTransition(() => {
+    setFilteredItems([...filteredItems]);
+  })
+  
+};
+
+return (
+  <div>
+    <input onChange={filterItems} />
+      <ul style={{ opacity: isPending ? 0.5 : 1}}>
+        {filteredItems.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    }
+  </div>
+);
+
+```
+
+<Demo3 />
+
+</Step>
+
+</CodeSurferColumns>
+
+---
+
+<CodeSurferColumns themes={[nightOwl, vsDark]}>
+
+<Step>
+
+```js
+
+const [filter, setFilter] = useState('')
+
+const [filteredItems, setFilteredItems] = 
+useState(dummyItems);
+
+const filterItems = (e) => {
+  const value = e.target.value;
+  const filteredItems = dummyItems.filter(
+    (item) => item.includes(value)
+  );
+  
+  setFilter(value);
+  setFilteredItems([...filteredItems]);
+  
+};
+
+return (
+  <div>
+    <input onChange={filterItems} />
+    <ItemsList items={filteredItems} />
+  </div>
+);
+
+```
+
+```js
+
+export const ItemsList = ({ items }) => {
+
+  return (
+    <ul>
+      {items.map((item, index) => (
+        <li key={index}>{item}</li>
+      ))}
+    </ul>
+  );
+};
+
+
+```
+
+</Step>
+
+<Step>
+
+```js
+
+const [filter, setFilter] = useState('')
+
+const [filteredItems, setFilteredItems] = 
+useState(dummyItems);
+
+const filterItems = (e) => {
+  const value = e.target.value;
+  const filteredItems = dummyItems.filter(
+    (item) => item.includes(value)
+  );
+  
+  setFilter(value);
+  setFilteredItems([...filteredItems]);
+  
+};
+
+return (
+  <div>
+    <input onChange={filterItems} />
+    <ItemsList items={filteredItems} />
+  </div>
+);
+
+```
+
+```js
+
+export const ItemsList = ({ items }) => {
+
+  const deferredItems = useDeferredValue(items)
+
+  return (
+    <ul>
+      {deferredItems.map((item, index) => (
+        <li key={index}>{item}</li>
+      ))}
+    </ul>
+  );
+};
+
+
+```
+
+</Step>
+
+</CodeSurferColumns>
+
+---
+
+<UseDeferredValueDemo1 />
+
+---
+
+<CodeSurferColumns themes={[nightOwl, vsDark]}>
+
+<Step>
+
+```js
+
+function App(){
+
+  const [value, setValue] = useState(0)
+
+  return (
+    <div>
+      <button
+        onClick={() => {
+          setValue((prevValue) => prevValue + 1);
+        }}
+      >
+        {value}
+      </button>
+
+      <ItemList value={value} />
+     
+    </div>
+  );
+}
+
+```
+
+```js
+
+const ItemList = ({ value }) => {
+   
+  const result = Array(90000)
+    .fill(1)
+    .map((_, index) => {
+        return <li key={index}>{value+index}</li>
+     });
+  return <ul>{result}</ul>;
+};
+
+```
+
+</Step>
+
+<Step>
+
+```js
+
+function App(){
+
+  const [value, setValue] = useState(0)
+  const deferredValue = useDeferredValue(value)
+
+  return (
+    <div>
+      <button
+        onClick={() => {
+          setValue((prevValue) => prevValue + 1);
+        }}
+      >
+        {value}
+      </button>
+
+      <ItemList value={value} />
+     
+    </div>
+  );
+}
+
+```
+
+```js
+
+const ItemList = ({ value }) => {
+   
+  const result = Array(90000)
+    .fill(1)
+    .map((_, index) => {
+        return <li key={index}>{value+index}</li>
+     });
+  return <ul>{result}</ul>;
+};
+
+```
+
+</Step>
+
+<Step>
+
+```js
+
+function App(){
+
+  const [value, setValue] = useState(0)
+  const deferredValue = useDeferredValue(value)
+
+  return (
+    <div>
+      <button
+        onClick={() => {
+          setValue((prevValue) => prevValue + 1);
+        }}
+      >
+        {value}
+      </button>
+
+      <ItemList value={deferredValue} />
+     
+    </div>
+  );
+}
+
+```
+
+```js
+
+const ItemList = ({ value }) => {
+   
+  const result = Array(90000)
+    .fill(1)
+    .map((_, index) => {
+        return <li key={index}>{value+index}</li>
+     });
+  return <ul>{result}</ul>;
+};
+
+```
+
+</Step>
+
+<Step>
+
+```js
+
+const MemoedList = React.memo(ItemList);
+
+function App(){
+
+  const [value, setValue] = useState(0)
+  const deferredValue = useDeferredValue(value)
+
+  return (
+    <div>
+      <button
+        onClick={() => {
+          setValue((prevValue) => prevValue + 1);
+        }}
+      >
+        {value}
+      </button>
+
+      <MemoedList value={deferredValue} />
+     
+    </div>
+  );
+}
+
+```
+
+```js
+
+const ItemList = ({ value }) => {
+   
+  const result = Array(90000)
+    .fill(1)
+    .map((_, index) => {
+        return <li key={index}>{value+index}</li>
+     });
+  return <ul>{result}</ul>;
+};
+
+```
+
+</Step>
+
+<Step>
+
+```js
+
+const MemoedList = React.memo(ItemList);
+
+function App(){
+
+  const [value, setValue] = useState(0)
+  const deferredValue = useDeferredValue(value)
+  const isPending = deferredValue !== value
+
+  return (
+    <div>
+      <button
+        onClick={() => {
+          setValue((prevValue) => prevValue + 1);
+        }}
+      >
+        {value}
+      </button>
+
+      <div
+        style={{
+          opacity: isPending ? 0.5 : 1,
+        }}
+      >
+        <MemoedList value={deferredValue} />
+      </div>
+     
+    </div>
+  );
+}
+
+```
+
+```js
+
+const ItemList = ({ value }) => {
+   
+  const result = Array(90000)
+    .fill(1)
+    .map((_, index) => {
+        return <li key={index}>{value+index}</li>
+     });
+  return <ul>{result}</ul>;
+};
+
+```
+
+
+
+</Step>
+
+</CodeSurferColumns>
+
+---
+
+<Demo4 />
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```smalltalk
+
+Both useTransition and useDeferredValue give same results 
+but useDeferred value is used when you don't have control over the
+state update of a value you want to defer.
+
+```
+
+```smalltalk
+
+Both useTransition and useDeferredValue give same results 
+but useDeferred value is used when you don't have control over the
+state update of a value you want to defer.
+
+useDeferredValue and useTransition does an extra rerender. 
+
+```
+</CodeSurfer>
+
+---
+
+## Suspense
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```smalltalk
+
+Suspense lets you specify the loading state for a part of the
+component tree if it's not yet ready to be displayed
+```
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```js title="Displaying fallback for lazy loaded component"
+
+function App(){
+  
+}
+
+```
+
+```js title="Displaying fallback for lazy loaded component"
+
+function App(){
+  const Profile = React.lazy(() => import("./Profile"));
+  
+}
+
+```
+
+```js title="Displaying fallback for lazy loaded component"
+
+function App(){
+  const Profile = React.lazy(() => import("./Profile"));
+
+  return (
+        <Profile />
+  )
+}
+
+```
+
+```js title="Displaying fallback for lazy loaded component"
+
+function App(){
+  const Profile = React.lazy(() => import("./Profile"));
+
+  return (
+      <Suspense fallback={<Loading />}>
+        <Profile />
+      </Suspense>
+  )
+}
+
+```
+
+```js title="Data Fetching"
+
+function App(){
+  const Profile = React.lazy(() => import("./Profile"));
+
+  return (
+      <Suspense fallback={<Loading />}>
+        <Profile />
+      </Suspense>
+  )
+}
+
+```
+
+```js title="Data Fetching"
+
+function Posts(){
+
+}
+
+function App(){
+  const Profile = React.lazy(() => import("./Profile"));
+
+  return (
+      <Suspense fallback={<Loading />}>
+        <Profile />
+      </Suspense>
+  )
+}
+
+```
+
+```js title="Data Fetching"
+
+function Posts(){
+  const posts = fetchPosts('/posts');
+
+}
+
+function App(){
+  const Profile = React.lazy(() => import("./Profile"));
+
+  return (
+      <Suspense fallback={<Loading />}>
+        <Profile />
+      </Suspense>
+  )
+}
+
+```
+
+```js title="Data Fetching"
+
+function Posts(){
+  const posts = fetchPosts('/posts');
+  return posts.map((post) => <div>{post.title}</div>)
+}
+
+function App(){
+  const Profile = React.lazy(() => import("./Profile"));
+
+  return (
+      <Suspense fallback={<Loading />}>
+        <Profile />
+      </Suspense>
+  )
+}
+
+```
+
+```js title="Data Fetching"
+
+function Posts(){
+  const posts = fetchPosts('/posts');
+  return posts.map((post) => <div>{post.title}</div>)
+}
+
+function App(){
+  const Profile = React.lazy(() => import("./Profile"));
+
+  return (
+      <Suspense fallback={<Loading />}>
+        <Profile />
+        <Posts />
+      </Suspense>
+  )
+}
+
+```
+
+```js title="Data Fetching"
+
+function Posts(){
+  const posts = fetchPosts('/posts');
+  return posts.map((post) => <div>{post.title}</div>)
+}
+
+function App(){
+  const Profile = React.lazy(() => import("./Profile"));
+
+  return (
+      <Suspense fallback={<Loading />}>
+        <Profile />
+        <Suspense fallback='Loading posts..'>
+          <Posts />
+        </Suspense>
+      </Suspense>
+  )
+}
+
+```
+
+```js title="Data Fetching" 3
+
+function Posts(){
+  const posts = fetchPosts('/posts');
+  return posts.map((post) => <div>{post.title}</div>)
+}
+
+function App(){
+  const Profile = React.lazy(() => import("./Profile"));
+
+  return (
+      <Suspense fallback={<Loading />}>
+        <Profile />
+        <Suspense fallback='Loading posts..'>
+          <Posts />
+        </Suspense>
+      </Suspense>
+  )
+}
+
+```
+
+```js title="Data Fetching"
+
+function Posts(){
+  const posts = fetchPosts('/posts');
+  return posts.map((post) => <div>{post.title}</div>)
+}
+
+function App(){
+  const Profile = React.lazy(() => import("./Profile"));
+
+  return (
+      <Suspense fallback={<Loading />}>
+        <Profile />
+        <Suspense fallback='Loading posts..'>
+          <Posts />
+        </Suspense>
+      </Suspense>
+  )
+}
+
+```
+
+```js title="Data Fetching"
+
+function Posts(){
+  const posts = fetchPosts('/posts');
+  return posts.map((post) => <div>{post.title}</div>)
+}
+
+function App(){
+  const Profile = React.lazy(() => import("./Profile"));
+
+  return (
+    <ErrorBoundary fallback={<Error />}>
+      <Suspense fallback={<Loading />}>
+        <Profile />
+        <Suspense fallback='Loading posts..'>
+          <Posts />
+        </Suspense>
+      </Suspense>
+    </ErrorBoundary>
+  )
+  
+}
+
+```
+
+</CodeSurfer>
+
+---
+
+
+<CodeSurfer theme={nightOwl}>
+
+```smalltalk
+Before React 18 suspense was only used for code splitting and only supported on client.
+However now it also supports server side rendering with streaming
+```
+
+</CodeSurfer>
+
+---
+
+<img src={suspense1} width='80%'/>
+
+---
+
+<img src={suspense2} width='80%'/>
+
+---
+
+<img src={suspense3} width='80%'/>
+
+---
+
+<img src={suspense4} width='80%'/>
+
+---
+
+## React Server Components
+<ReactLogo />
+
+---
+
+<img src={tslide1} width='80%'/>
+
+---
+
+<img src={tslide2} width='80%'/>
+
+---
+
+<img src={tslide3}  width='80%'/>
+
+---
+
+<img src={tslide4} width='80%'/>
+
+---
+
+<img src={tslide7} width='80%'/>
+
+---
+
+<img src={tslide8} width='80%'/>
+
+---
+
+<img src={tslide5}  width='80%' />
+
+---
+
+<img src={tslide6}  width='80%'/>
+
+---
+<img src={islide0} />
+
+---
+
+<img src={islide1} width='80%'/>
+
+---
+
+<img src={islide2} width='80%'/>
+
+---
+
+<img src={islide3}  width='80%' />
+
+---
+
+<img src={islide4} width='80%'/>
+
+---
+
+<img src={islide5}  width='80%'/>
+
+---
+
+<img src={islide6}  width='80%'/>
+
+---
+
+<img src={islide7}  width='80%'/>
+
+---
+
+<img src={islide8}  width='80%'/>
+
+---
+
+<img src={what} height="70%" width="70%"/>
+
+---
+
+<img src={islide9} />
+
+---
+
+### Shopify Hydrogen
+
+---
+
+<img src={islide10} />
+
+---
+
+### Configurations needed
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```js
+
+npm install next@canary react@rc react-dom@rc
+
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```js
+
+// next.config.js
+module.exports = {
+  experimental: {
+    runtime: 'edge',
+    serverComponents: true,
+  },
+}
+
+```
+</CodeSurfer>
+
+---
+
+### Create React Server Component
+
+---
+
+<img src={slide18}  width='90%'/>
+
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```js file='./components/App.js'
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```js
+export default function EmailList() {
+
+}
+```
+
+```js
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+}
+```
+
+```js
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+
+  return (
+    <div>
+      {emails.map(email => {
+
+      })}
+    </div>
+  )
+  
+}
+```
+
+```js
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <div>
+                <div>{name}{email}</div>
+                <div>{subject}</div>
+                <div>{description}</div>
+                <div>{date}</div>
+            </div>
+          )
+      })}
+    </div>
+  )
+}
+```
+
+```js
+import { format } from 'date-fns'
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <div>
+                <div>{name}{email}</div>
+                <div>{subject}</div>
+                <div>{description}</div>
+                <div>{format(date)}</div>
+            </div>
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js 1:25
+
+//EmailList.js
+
+import { format } from 'date-fns'
+
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <div>
+                <div>{name}{email}</div>
+                <div>{subject}</div>
+                <div>{description}</div>
+                <div>{format(date)}</div>
+            </div>
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+</CodeSurfer>
+
+
+
+---
+
+<CodeSurferColumns themes={[nightOwl, vsDark]}>
+
+<Step>
+
+```js 1:12,22:24
+
+//EmailListContainer.js
+
+import { format } from 'date-fns'
+
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <div>
+                <div>{name}{email}</div>
+                <div>{subject}</div>
+                <div>{description}</div>
+                <div>{format(date)}</div>
+            </div>
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js
+
+// EmailListView.js
+
+export default function EmailListView(props){
+
+  const {name, email, subject, description, date} = props
+
+  return (
+    <div>
+        <div>{name}{email}</div>
+        <div>{subject}</div>
+        <div>{description}</div>
+        <div>{date}</div>
+    </div>
+  )
+}
+
+```
+</Step>
+
+<Step>
+
+```js 1:12,22:24
+
+//EmailListContainer.server.js
+
+import { format } from 'date-fns'
+
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <div>
+                <div>{name}{email}</div>
+                <div>{subject}</div>
+                <div>{description}</div>
+                <div>{format(date)}</div>
+            </div>
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js 1:16
+
+// EmailListView.client.js
+
+export default function EmailListView(props){
+
+  const {name, email, subject, description, date} = props
+
+  return (
+    <div>
+        <div>{name}{email}</div>
+        <div>{subject}</div>
+        <div>{description}</div>
+        <div>{date}</div>
+    </div>
+  )
+}
+
+```
+</Step>
+
+<Step>
+
+```js
+
+//EmailListContainer.server.js
+
+import { format } from 'date-fns'
+import EmailListView from './EmailListView.client.js'
+
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <EmailListView
+              name={name}
+              subject={subject}
+              description={description}
+              date={format(date)}
+            />
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js
+
+// EmailListView.client.js
+
+export default function EmailListView(props){
+
+  const {name, email, subject, description, date} = props
+
+  return (
+    <div>
+        <div>{name}{email}</div>
+        <div>{subject}</div>
+        <div>{description}</div>
+        <div>{date}</div>
+    </div>
+  )
+}
+
+```
+
+</Step>
+
+</CodeSurferColumns>
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```js
+
+// EmailListContainer.server.js
+
+import { format } from 'date-fns'
+import EmailListView from './EmailListView.client.js'
+
+export default function EmailList() {
+  const emails = fetch(`/emails/${userId}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <EmailListView
+              name={name}
+              subject={subject}
+              description={description}
+              date={format(date)}
+            />
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js
+
+// EmailListContainer.server.js
+
+import { format } from 'date-fns'
+import EmailListView from './EmailListView.client.js'
+
+export default function EmailList() {
+  const emails = db.query(`${query}`)
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <EmailListView
+              name={name}
+              subject={subject}
+              description={description}
+              date={format(date)}
+            />
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+```js
+
+// EmailListContainer.server.js
+
+import { format } from 'date-fns'
+import EmailListView from './EmailListView.client.js'
+
+export default function EmailList() {
+  const emails = fs.readFile('emailData.js')
+  
+  return (
+    <div>
+      {emails.map(email => {
+        const { name, email, subject, description, date } = email
+        return (
+            <EmailListView
+              name={name}
+              subject={subject}
+              description={description}
+              date={format(date)}
+            />
+          )
+      })}
+    </div>
+  )
+}
+
+```
+
+</CodeSurfer>
+
+---
+
+<img src={whenUse} width="70%"/>
+
+---
+
+<img src={slide20}/>
+
+---
+
+<img src={slide19} width='40%'/>
+
+
+---
+
+### Challenges 
+
+---
+
+<img src={slide1}/>
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```js
+
+export default function MyClientComponent() {
+    return (
+        <div>
+            This code is rendered on the client
+        </div>
+    );
+}
+
+```
+
+```js
+
+import MyServerComponent from './MyServerComponent.server.js'
+export default function MyClientComponent() {
+    return (
+        <div>
+            This code is rendered on the client
+            <MyServerComponent />
+        </div>
+    );
+}
+
+```
+
+```js
+
+export default function MyClientComponent({children}) {
+    return (
+        <div>
+            This code is rendered on the client
+            {children}
+        </div>
+    );
+}
+
+```
+
+
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={nightOwl}>
+
+```js
+
+export default function MyContainerServerComponent() {
+    return (
+        <MyClientComponent >
+            <MyServerComponent />
+        </MyClientComponent>
+    );
+}
+
+```
+
+</CodeSurfer>
+
+---
+
+<img src={slide2} />
+
+---
+
+<img src={slide3}  width='80%'/>
+
+
+---
+
+<img src={slide13} width='70%' height='70%'/>
+
+---
+
+<img src={slide14}/>
+
+---
+
+<img src={slide15}/>
+
+---
+
+<img src={slide16} />
+
+---
+
+<img src={slide17} />
+
+---
+
+<img src={thanks}  />
+
+
+
