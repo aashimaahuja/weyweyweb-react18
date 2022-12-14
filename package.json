@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "mdx-deck react18.mdx",
-    "build": "mdx-deck build deck.mdx",
+    "build": "mdx-deck build react18.mdx",
     "test": "echo \"there are no tests\""
   },
   "devDependencies": {
